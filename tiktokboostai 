@@ -1,0 +1,52 @@
+from TikTokApi import TikTokApi
+import time
+
+# Initialize the TikTok API
+api = TikTokApi.get_instance()
+
+# Authentication (You can leave this out if you're not using authenticated actions)
+# For example, login with a username and password (optional)
+# api.login(username='your_username', password='your_password')
+
+# Function to follow a user by their username
+def follow_user(username):
+    user = api.get_user(username)
+    if user:
+        user_id = user['user_id']
+        api.follow_user(user_id)
+        print(f"Following {username}")
+    else:
+        print(f"User {username} not found")
+
+# Function to like a post by its TikTok ID
+def like_post(tiktok_id):
+    post = api.get_video_by_id(tiktok_id)
+    if post:
+        api.like(post)
+        print(f"Liked post {tiktok_id}")
+    else:
+        print(f"Post {tiktok_id} not found")
+
+# Function to comment on a post
+def comment_on_post(tiktok_id, comment_text):
+    post = api.get_video_by_id(tiktok_id)
+    if post:
+        api.comment(post, comment_text)
+        print(f"Commented on post {tiktok_id}: {comment_text}")
+    else:
+        print(f"Post {tiktok_id} not found")
+
+# Main function
+def main():
+    # Example actions
+    follow_user("some_tiktok_user")
+    time.sleep(2)  # Wait for 2 seconds before the next action
+
+    like_post("some_tiktok_video_id")
+    time.sleep(2)
+
+    comment_on_post("some_tiktok_video_id", "This is an awesome video!")
+
+# Run the bot
+if __name__ == "__main__":
+    main()
